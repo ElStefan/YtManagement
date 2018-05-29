@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ytmanagement:
+    image: ${DOCKER_REGISTRY}ytmanagement
+    build:
+      context: .
+      dockerfile: YtManagement/Dockerfile
