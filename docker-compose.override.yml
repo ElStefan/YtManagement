@@ -4,5 +4,9 @@ services:
   ytmanagement:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
     ports:
       - "80"
+      - "50002:80"
+    volumes:
+    - C:\Temp:/data:rw

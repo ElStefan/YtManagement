@@ -12,6 +12,8 @@ using Quartz;
 using Quartz.Impl;
 using YtManagement.Core;
 using YtManagement.Job;
+using YtManagement.Repository;
+using YtManagement.Storage;
 
 namespace YtManagement
 {
@@ -19,7 +21,6 @@ namespace YtManagement
     {
         public Startup(IConfiguration configuration)
         {
-            //SystemCore.Instance.Start();
             Configuration = configuration;
         }
 
@@ -28,6 +29,8 @@ namespace YtManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IStorage, JsonFileStorage>();
+            services.AddSingleton<IRulesRepository, RulesRepository>();
             services.AddSingleton<ISystemCore, SystemCore>();
             services.AddScoped<UpdateJob>();
             services.AddMvc();

@@ -17,7 +17,7 @@ namespace YtManagement.Job
         }
         public Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("Core value: " + _core.Value);
+            //Console.WriteLine("Core value: " + _core.Value);
             return Task.FromResult(true);
         }
     }

@@ -28,7 +28,7 @@ namespace YtManagement.Controllers
         public string Get(int id)
         {
             _core.Value = id;
-            return "OK";
+            return $"{DateTime.Now}: OK";
         }
 
         // POST api/values
