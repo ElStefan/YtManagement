@@ -37,6 +37,10 @@ namespace YtManagement.Repository
                 maxId = this._cache.Keys.Max();
             }
             item.Id = maxId + 1;
+            if(this._cache.Values.Any(o => o.RuleString.Equals(item.RuleString, StringComparison.OrdinalIgnoreCase) && o.SearchPosition == item.SearchPosition))
+            {
+                return new ActionResult<int>(ActionStatus.Error, "Rule already exists");
+            }
             if(!this._cache.TryAdd(item.Id, item))
             {
                 return new ActionResult<int>(ActionStatus.Error, "Id already exists, try again");
@@ -85,6 +89,9 @@ namespace YtManagement.Repository
             oldRule.Regex = item.Regex;
             oldRule.RuleString = item.RuleString;
             oldRule.Target = item.Target;
+            oldRule.IgnoreVideo = item.IgnoreVideo;
+            oldRule.Priority = item.Priority;
+            oldRule.SearchPosition = item.SearchPosition;
 
             return new ActionResult(ActionStatus.Success);
         }

@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace YtManagement.Model
 {
-    public enum ActionStatus
+    public class YtPlaylist
     {
-        Unknown = 0,
-        Success = 1,
-        Error = 2,
-        NotFound = 3,
-        NotAuthorized = 4
+        public string Id { get; set; }
+        public string Title { get; set; }
     }
 }

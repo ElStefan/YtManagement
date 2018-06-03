@@ -61,6 +61,9 @@
     <Compile Include="..\YtManagement\Model\ManagementRule.cs">
       <Link>Model\ManagementRule.cs</Link>
     </Compile>
+    <Compile Include="..\YtManagement\Model\SearchPosition.cs">
+      <Link>Model\SearchPosition.cs</Link>
+    </Compile>
     <Compile Include="Extension\ControlExtensions.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

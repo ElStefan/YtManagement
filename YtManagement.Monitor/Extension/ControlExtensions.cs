@@ -14,10 +14,12 @@ namespace YtManagement.Monitor.Extension
         {
             toolTip?.Dispose();
 
-            toolTip = new ToolTip();
-            toolTip.ToolTipTitle = icon.ToString();
+            toolTip = new ToolTip
+            {
+                ToolTipTitle = icon.ToString(),
+                ToolTipIcon = icon
+            };
             var pos = control.PointToClient(Cursor.Position);
-            toolTip.ToolTipIcon = icon;
             pos.X += 20;
             pos.Y += 10;
             toolTip.Show(message, control, pos, 5000);

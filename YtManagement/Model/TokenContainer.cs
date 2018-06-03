@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace YtManagement.Model
 {
-    public enum ActionStatus
+    public class TokenContainer
     {
-        Unknown = 0,
-        Success = 1,
-        Error = 2,
-        NotFound = 3,
-        NotAuthorized = 4
+        public string Key { get; set; }
+        public object Data { get; set; }
     }
 }

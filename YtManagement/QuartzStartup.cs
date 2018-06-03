@@ -39,7 +39,7 @@ namespace YtManagement
             var updateJobTrigger = TriggerBuilder.Create()
                 .ForJob(nameof(UpdateJob))
                 .StartNow()
-                .WithSimpleSchedule(o => o.WithIntervalInSeconds(5).RepeatForever())
+                .WithSimpleSchedule(o => o.WithIntervalInMinutes(5).RepeatForever())
                 .WithIdentity($"{nameof(UpdateJob)}Trigger")
                 .Build();
 

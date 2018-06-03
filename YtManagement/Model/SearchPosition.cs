@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace YtManagement.Model
 {
-    public enum ActionStatus
+    public enum SearchPosition
     {
-        Unknown = 0,
-        Success = 1,
-        Error = 2,
-        NotFound = 3,
-        NotAuthorized = 4
+        All = 0,
+        VideoTitle = 1,
+        ChannelTitle = 2
     }
 }
