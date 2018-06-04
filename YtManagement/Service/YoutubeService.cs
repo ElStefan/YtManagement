@@ -169,7 +169,11 @@ namespace YtManagement.Service
             playlistItemsListRequest.PlaylistId = uploadListId;
             playlistItemsListRequest.MaxResults = 50;
             var playlistItemsResponse = playlistItemsListRequest.Execute();
-            var list = playlistItemsResponse.Items.OrderBy(o => o.Snippet.PublishedAt).Select(o => new YtVideo { Id = o.Id, Title = o.Snippet.Title }).ToList();
+            var list = playlistItemsResponse.Items
+                .Where(o => o.Snippet.PublishedAt > DateTime.Now.AddDays(-7))
+                .OrderBy(o => o.Snippet.PublishedAt)
+                .Select(o => new YtVideo { Id = o.Id, Title = o.Snippet.Title })
+                .ToList();
 
             foreach (var item in playlistItemsResponse.Items)
             {
@@ -248,6 +252,11 @@ namespace YtManagement.Service
                 return;
             }
             this._processedPlaylistItems.GetOrAdd(videoId, new ProcessedPlaylistItem { Key = videoId, PlaylistItem = playlistItemResult.Data });
+            var removeKeys = this._processedPlaylistItems.Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-7)).Select(o => o.Key).ToList();
+            foreach (var item in removeKeys)
+            {
+                this._processedPlaylistItems.TryRemove(item, out var trash);
+            }
             this._storage.Save(_processedPlaylistItems);
         }
 
