@@ -93,6 +93,8 @@ namespace YtManagement.Repository
             oldRule.Priority = item.Priority;
             oldRule.SearchPosition = item.SearchPosition;
 
+            this._storage.Save(this._cache);
+
             return new ActionResult(ActionStatus.Success);
         }
     }
