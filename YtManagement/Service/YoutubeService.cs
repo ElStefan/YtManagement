@@ -69,7 +69,7 @@ namespace YtManagement.Service
 
             if (_credential == null)
             {
-                return new ActionResult<List<YtPlaylist>>(ActionStatus.NotAuthorized);
+                return new ActionResult<List<YtPlaylist>>(ActionStatus.NotAuthorized,"Credentials missing");
             }
 
             var service = CreateService();
@@ -121,7 +121,7 @@ namespace YtManagement.Service
             }
             if (_credential == null)
             {
-                return new ActionResult<List<YtChannel>>(ActionStatus.NotAuthorized);
+                return new ActionResult<List<YtChannel>>(ActionStatus.NotAuthorized, "Credentials missing");
             }
             var service = CreateService();
             var subscriptionsListRequest = service.Subscriptions.List("id, snippet");
@@ -160,7 +160,7 @@ namespace YtManagement.Service
         {
             if (_credential == null)
             {
-                return new ActionResult<List<YtVideo>>(ActionStatus.NotAuthorized);
+                return new ActionResult<List<YtVideo>>(ActionStatus.NotAuthorized, "Credentials missing");
             }
             var service = CreateService();
             var playlistItemsListRequest = service.PlaylistItems.List("id,snippet");
@@ -183,7 +183,7 @@ namespace YtManagement.Service
         {
             if (_credential == null)
             {
-                return new ActionResult(ActionStatus.NotAuthorized);
+                return new ActionResult(ActionStatus.NotAuthorized, "Credentials missing");
             }
 
             var playlistResult = GetPlaylistFromCache(targetPlaylistTitle);
@@ -198,7 +198,7 @@ namespace YtManagement.Service
             {
                 return playlistItemResult;
             }
-            
+
 
             var service = CreateService();
 
@@ -220,7 +220,7 @@ namespace YtManagement.Service
         {
             if (!_playlistItems.TryGetValue(playlistItemId, out var value))
             {
-                return new ActionResult<PlaylistItem>(ActionStatus.NotFound);
+                return new ActionResult<PlaylistItem>(ActionStatus.NotFound, $"Playlist item {playlistItemId} not found");
             }
             return new ActionResult<PlaylistItem>(ActionStatus.Success, value);
 
@@ -228,15 +228,14 @@ namespace YtManagement.Service
 
         private ActionResult<Playlist> GetPlaylistFromCache(string targetPlaylistTitle)
         {
-            if (_playlists.Count == 0)
-            {
-                LoadPlaylists();
-            }
+
+            LoadPlaylists();
+
 
             var playlist = _playlists.Where(o => o.Value.Snippet.Title.Equals(targetPlaylistTitle, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value;
             if (playlist == null)
             {
-                return new ActionResult<Playlist>(ActionStatus.NotFound);
+                return new ActionResult<Playlist>(ActionStatus.NotFound, $"Playlist {targetPlaylistTitle} not found");
             }
             return new ActionResult<Playlist>(ActionStatus.Success, playlist);
         }

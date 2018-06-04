@@ -57,7 +57,7 @@ namespace YtManagement.Repository
         {
             if(!this._cache.TryRemove(id, out var trash))
             {
-                return new ActionResult(ActionStatus.NotFound);
+                return new ActionResult(ActionStatus.NotFound, $"Rule {id} not found");
             }
             this._storage.Save(this._cache);
             return new ActionResult(ActionStatus.Success);
@@ -67,7 +67,7 @@ namespace YtManagement.Repository
         {
             if (!_cache.TryGetValue(id, out ManagementRule value))
             {
-                return new ActionResult<ManagementRule>(ActionStatus.NotFound);
+                return new ActionResult<ManagementRule>(ActionStatus.NotFound, $"Rule {id} not found");
             }
             return new ActionResult<ManagementRule>(ActionStatus.Success, value);
 

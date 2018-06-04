@@ -94,7 +94,12 @@ namespace YtManagement.Job
                     if (!matchedRule.IgnoreVideo)
                     {
                         Console.WriteLine("Moving video '{0}' to '{1}'", video.Title, matchedRule.Target);
-                        ytService.AddToPlaylist(video.Id, matchedRule.Target);
+                        var addResult = ytService.AddToPlaylist(video.Id, matchedRule.Target);
+                        if(addResult.Status != ActionStatus.Success)
+                        {
+                            Console.WriteLine("{0} {1}",addResult.Status, addResult.Message);
+                            continue;
+                        }
                     }
                     ytService.SetProcessed(video.Id);
 
