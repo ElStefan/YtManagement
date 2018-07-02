@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using YtManagement.Model;
+using YtManagement.Common.Model;
 using YtManagement.Repository;
 
 namespace YtManagement.Controllers
@@ -16,34 +16,18 @@ namespace YtManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ManagementRule>> Get()
-        {
-            return _rulesRepository.GetAll();
-        }
-
+        public ActionResult<List<ManagementRule>> Get() => _rulesRepository.GetAll();
         
         [HttpGet("{id}")]
-        public ActionResult<ManagementRule> Get(int id)
-        {
-            return _rulesRepository.Get(id);
-        }
+        public ActionResult<ManagementRule> Get(int id) => _rulesRepository.Get(id);
 
         [HttpPost]
-        public Model.ActionResult Post([FromBody]ManagementRule item)
-        {
-            return _rulesRepository.Update(item);
-        }
-        
+        public Common.Model.ActionResult Post([FromBody]ManagementRule item) => _rulesRepository.Update(item);
+
         [HttpPut()]
-        public Model.ActionResult Put([FromBody]ManagementRule item)
-        {
-            return _rulesRepository.Add(item);
-        }
-        
+        public Common.Model.ActionResult Put([FromBody]ManagementRule item) => _rulesRepository.Add(item);
+
         [HttpDelete("{id}")]
-        public Model.ActionResult Delete(int id)
-        {
-            return _rulesRepository.Delete(id);
-        }
+        public Common.Model.ActionResult Delete(int id) => _rulesRepository.Delete(id);
     }
 }

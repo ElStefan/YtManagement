@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using YtManagement.Common.Model;
+using YtManagement.Extension;
 using YtManagement.Model;
 using YtManagement.Storage;
 
@@ -62,13 +64,14 @@ namespace YtManagement.Service
             {
                 if (requestTime > DateTime.Now.AddHours(-1))
                 {
-                    return new ActionResult<List<YtPlaylist>>(ActionStatus.Success, _playlists.Values.Select(o => new YtPlaylist { Id = o.Id, Title = o.Snippet.Title }).ToList());
+                    var data = _playlists.Values.Select(o => new YtPlaylist { Id = o.Id, Title = o.Snippet.Title }).ToList();
+                    return new ActionResult<List<YtPlaylist>>(ActionStatus.Success, data);
                 }
             }
 
             if (_credential == null)
             {
-                return new ActionResult<List<YtPlaylist>>(ActionStatus.NotAuthorized,"Credentials missing");
+                return new ActionResult<List<YtPlaylist>>(ActionStatus.NotAuthorized, "Credentials missing");
             }
 
             var service = CreateService();
@@ -115,7 +118,8 @@ namespace YtManagement.Service
             {
                 if (requestTime > DateTime.Now.AddHours(-1))
                 {
-                    return new ActionResult<List<YtChannel>>(ActionStatus.Success, _subscriptions.Values.Select(o => new YtChannel { Id = o.Snippet.ResourceId.ChannelId, Title = o.Snippet.Title }).ToList());
+                    var data = _subscriptions.Values.Select(o => new YtChannel { Id = o.Snippet.ResourceId.ChannelId, Title = o.Snippet.Title }).ToList();
+                    return new ActionResult<List<YtChannel>>(ActionStatus.Success, data);
                 }
             }
             if (_credential == null)
@@ -137,7 +141,6 @@ namespace YtManagement.Service
                 if (subscriptionListResponse == null)
                 {
                     return new ActionResult<List<YtChannel>>(ActionStatus.Error, "Could not get subscriptions");
-
                 }
                 pageToken = subscriptionListResponse?.NextPageToken;
                 subscriptionsListRequest.PageToken = pageToken;
@@ -155,7 +158,7 @@ namespace YtManagement.Service
             return new ActionResult<List<YtChannel>>(ActionStatus.Success, list);
         }
 
-        public ActionResult<List<YtVideo>> GetUploads(string channelId) // TODO calculate cache?
+        public ActionResult<List<YtVideo>> GetUploads(string channelId)
         {
             if (_credential == null)
             {
@@ -171,7 +174,7 @@ namespace YtManagement.Service
             var list = playlistItemsResponse.Items
                 .Where(o => o.Snippet.PublishedAt > DateTime.Now.AddDays(-7))
                 .OrderBy(o => o.Snippet.PublishedAt)
-                .Select(o => new YtVideo { Id = o.Id, Title = o.Snippet.Title })
+                .Select(o => o.AsYtVideo())
                 .ToList();
 
             foreach (var item in playlistItemsResponse.Items)
@@ -201,8 +204,7 @@ namespace YtManagement.Service
             {
                 return playlistItemResult;
             }
-
-
+            
             var service = CreateService();
 
             var playlistItemToInsert = new PlaylistItem();
@@ -226,14 +228,11 @@ namespace YtManagement.Service
                 return new ActionResult<PlaylistItem>(ActionStatus.NotFound, $"Playlist item {playlistItemId} not found");
             }
             return new ActionResult<PlaylistItem>(ActionStatus.Success, value);
-
         }
 
         private ActionResult<Playlist> GetPlaylistFromCache(string targetPlaylistTitle)
         {
-
             LoadPlaylists();
-
 
             var playlist = _playlists.Where(o => o.Value.Snippet.Title.Equals(targetPlaylistTitle, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value;
             if (playlist == null)
@@ -251,7 +250,12 @@ namespace YtManagement.Service
                 return;
             }
             this._processedPlaylistItems.GetOrAdd(videoId, new ProcessedPlaylistItem { Key = videoId, PlaylistItem = playlistItemResult.Data });
-            var removeKeys = this._processedPlaylistItems.Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-7)).Select(o => o.Key).ToList();
+
+            var removeKeys = this._processedPlaylistItems
+                .Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-7))
+                .Select(o => o.Key)
+                .ToList();
+
             foreach (var item in removeKeys)
             {
                 this._processedPlaylistItems.TryRemove(item, out var trash);
@@ -262,6 +266,12 @@ namespace YtManagement.Service
         public bool IsProcessed(string videoId)
         {
             return this._processedPlaylistItems.ContainsKey(videoId);
+        }
+
+        public ActionResult<List<YtVideo>> GetProcessed()
+        {
+            var data = this._processedPlaylistItems.Values.Select(o => o.PlaylistItem.AsYtVideo()).ToList();
+            return new ActionResult<List<YtVideo>>(ActionStatus.Success, data);
         }
     }
 }

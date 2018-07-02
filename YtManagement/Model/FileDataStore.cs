@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using YtManagement.Common.Model;
 using YtManagement.Storage;
 
 namespace YtManagement.Model

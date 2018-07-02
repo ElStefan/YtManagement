@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using YtManagement.Model;
+using YtManagement.Common.Model;
 using YtManagement.Repository;
 using YtManagement.Service;
 
@@ -23,7 +23,7 @@ namespace YtManagement.Job
         public Task Execute(IJobExecutionContext context)
         {
             try
-            {
+            {                
                 Process();
             }
             catch (Exception exception)
@@ -31,7 +31,7 @@ namespace YtManagement.Job
                 Console.WriteLine(exception);
                 return Task.FromResult(false);
             }
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         private void Process()

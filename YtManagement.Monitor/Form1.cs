@@ -1,75 +1,54 @@
-﻿using BrightIdeasSoftware;
-using System;
+﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using YtManagement.Model;
+using YtManagement.Common;
+using YtManagement.Common.Model;
 using YtManagement.Monitor.Extension;
 
 namespace YtManagement.Monitor
 {
     public partial class Form1 : Form
     {
-        private readonly TextOverlay _loadingOverlay = new TextOverlay { Text = "Loading...", Transparency = 210, BackColor = Color.LightGray, CornerRounding = 3, BorderColor = Color.Black, BorderWidth = 1.5f, TextColor = Color.Black };
-
-
-        //private BackgroundWorker worker;
-
         public Form1()
         {
 
             InitializeComponent();
-            this.toolStripComboBoxApi.Items.Add("http://localhost:50002/api/");
             this.toolStripComboBoxApi.Items.Add("http://diskstation.lampertnet:50002/api/");
+            this.toolStripComboBoxApi.Items.Add("http://localhost:50002/api/");
             this.toolStripComboBoxApi.SelectedIndex = 0;
             this.comboBoxSearchPosition.DataSource = Enum.GetValues(typeof(SearchPosition)).Cast<SearchPosition>().Select(o => new { Name = o.ToString(), Value = (int)o }).ToList();
             this.comboBoxSearchPosition.DisplayMember = "Name";
             this.comboBoxSearchPosition.ValueMember = "Value";
-            //worker = new BackgroundWorker();
-            //worker.DoWork += Worker_DoWork;
-            //worker.RunWorkerAsync();
         }
-
-        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    //while (true)
-        //    //{
-        //    //    var resultText = "waiting...";
-        //    //    using (var httpClient = new HttpClient())
-        //    //    {
-        //    //        var response = httpClient.GetAsync(ApiUri + "values").Result;
-        //    //        resultText = response.Content.ReadAsStringAsync().Result;
-        //    //        if (response.StatusCode != System.Net.HttpStatusCode.OK)
-        //    //        {
-        //    //            resultText = "Error";
-        //    //        }
-        //    //    }
-        //    //    //this.textBoxResult.BeginInvoke(new Action(() => this.textBoxResult.Text = resultText));
-        //    //    Thread.Sleep(100);
-        //    //}
-        //}
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReloadRules();
+            LoadSelectedTab();
+        }
+
+        private void LoadSelectedTab()
+        {
+            switch (this.tabControlMain.SelectedTab.Name)
+            {
+                case nameof(this.tabPageRules):
+
+                    ReloadRules();
+                    break;
+                case nameof(this.tabPageProcessedVideos):
+                    ReloadProcessedVideos();
+                    break;
+            }
         }
 
         private void ReloadRules()
         {
-            this.fastObjectListViewRules.OverlayText = this._loadingOverlay;
-            this.fastObjectListViewRules.EmptyListMsg = null;
-            this.fastObjectListViewRules.ClearObjects();
-            var rulesResult = YtManagementClient.GetRules();
-            if (rulesResult.Status != ActionStatus.Success)
-            {
-                this.fastObjectListViewRules.EmptyListMsg = rulesResult.Message;
-                this.fastObjectListViewRules.OverlayText = null;
-                return;
-            }
-            this.fastObjectListViewRules.EmptyListMsg = "No rules available";
-            this.fastObjectListViewRules.OverlayText = null;
-            this.fastObjectListViewRules.SetObjects(rulesResult.Data);
+            this.fastObjectListViewRules.LoadFrom(YtManagementClient.GetRules);
+        }
+
+        private void ReloadProcessedVideos()
+        {
+            this.fastObjectListViewProcessedVideos.LoadFrom(YtManagementClient.GetProcessedVideos);
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -156,6 +135,22 @@ namespace YtManagement.Monitor
             }
             this.ShowTooltip("Success", ToolTipIcon.Info);
             ReloadRules();
+        }
+
+        private void createRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!(this.fastObjectListViewProcessedVideos.SelectedObject is YtVideo item))
+            {
+                return;
+            }
+            this.tabControlMain.SelectedTab = this.tabPageRules;
+
+            this.textBoxRule.Text = item.Title;
+            this.textBoxTarget.Text = "unknown";
+            this.checkBoxRegex.Checked = false;
+            this.checkBoxIgnore.Checked = false;
+            this.numericUpDownPriority.Value = 4;
+            this.comboBoxSearchPosition.SelectedValue = SearchPosition.VideoTitle;
         }
     }
 }

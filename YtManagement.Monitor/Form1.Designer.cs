@@ -29,16 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.tabPageRules = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.fastObjectListViewRules = new BrightIdeasSoftware.FastObjectListView();
             this.olvColumnId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnRegex = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnTarget = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnIgnore = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnRule = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnSearchPos = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnTarget = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnLastMatch = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnPriority = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.contextMenuStripRules = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxSearchPosition = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDownPriority = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxIgnore = new System.Windows.Forms.CheckBox();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.checkBoxRegex = new System.Windows.Forms.CheckBox();
@@ -46,50 +55,51 @@
             this.textBoxRule = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxTarget = new System.Windows.Forms.TextBox();
+            this.tabPageProcessedVideos = new System.Windows.Forms.TabPage();
+            this.fastObjectListViewProcessedVideos = new BrightIdeasSoftware.FastObjectListView();
+            this.olvColumnVideoTitle = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnPublishedAt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.contextMenuStripProcessedVideos = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBoxApi = new System.Windows.Forms.ToolStripComboBox();
-            this.olvColumnIgnore = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnLastMatch = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnPriority = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.checkBoxIgnore = new System.Windows.Forms.CheckBox();
-            this.numericUpDownPriority = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.olvColumnSearchPos = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.comboBoxSearchPosition = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabControlMain.SuspendLayout();
+            this.tabPageRules.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastObjectListViewRules)).BeginInit();
             this.contextMenuStripRules.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPriority)).BeginInit();
+            this.tabPageProcessedVideos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fastObjectListViewProcessedVideos)).BeginInit();
+            this.contextMenuStripProcessedVideos.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControlMain
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 27);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1134, 511);
-            this.tabControl1.TabIndex = 0;
+            this.tabControlMain.Controls.Add(this.tabPageRules);
+            this.tabControlMain.Controls.Add(this.tabPageProcessedVideos);
+            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMain.Location = new System.Drawing.Point(0, 27);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(1134, 511);
+            this.tabControlMain.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPageRules
             // 
-            this.tabPage1.Controls.Add(this.splitContainer1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1126, 485);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Rules";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageRules.Controls.Add(this.splitContainer1);
+            this.tabPageRules.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRules.Name = "tabPageRules";
+            this.tabPageRules.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRules.Size = new System.Drawing.Size(1126, 485);
+            this.tabPageRules.TabIndex = 0;
+            this.tabPageRules.Text = "Rules";
+            this.tabPageRules.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -171,17 +181,41 @@
             this.olvColumnRegex.Text = "Regex";
             this.olvColumnRegex.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // olvColumnTarget
+            // olvColumnIgnore
             // 
-            this.olvColumnTarget.AspectName = "Target";
-            this.olvColumnTarget.Text = "Target";
-            this.olvColumnTarget.Width = 100;
+            this.olvColumnIgnore.AspectName = "IgnoreVideo";
+            this.olvColumnIgnore.CheckBoxes = true;
+            this.olvColumnIgnore.Text = "Ignore";
+            this.olvColumnIgnore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // olvColumnRule
             // 
             this.olvColumnRule.AspectName = "RuleString";
             this.olvColumnRule.Text = "Rule";
             this.olvColumnRule.Width = 300;
+            // 
+            // olvColumnSearchPos
+            // 
+            this.olvColumnSearchPos.AspectName = "SearchPosition";
+            this.olvColumnSearchPos.Text = "Search in";
+            // 
+            // olvColumnTarget
+            // 
+            this.olvColumnTarget.AspectName = "Target";
+            this.olvColumnTarget.Text = "Target";
+            this.olvColumnTarget.Width = 100;
+            // 
+            // olvColumnLastMatch
+            // 
+            this.olvColumnLastMatch.AspectName = "LastMatch";
+            this.olvColumnLastMatch.AspectToStringFormat = "{0:dd.MM.yyyy HH:mm:ss}";
+            this.olvColumnLastMatch.Text = "LastMatch";
+            this.olvColumnLastMatch.Width = 110;
+            // 
+            // olvColumnPriority
+            // 
+            this.olvColumnPriority.AspectName = "Priority";
+            this.olvColumnPriority.Text = "Priority";
             // 
             // contextMenuStripRules
             // 
@@ -196,6 +230,49 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(21, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Search in:";
+            // 
+            // comboBoxSearchPosition
+            // 
+            this.comboBoxSearchPosition.FormattingEnabled = true;
+            this.comboBoxSearchPosition.Location = new System.Drawing.Point(82, 98);
+            this.comboBoxSearchPosition.Name = "comboBoxSearchPosition";
+            this.comboBoxSearchPosition.Size = new System.Drawing.Size(156, 21);
+            this.comboBoxSearchPosition.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(35, 153);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Priority:";
+            // 
+            // numericUpDownPriority
+            // 
+            this.numericUpDownPriority.Location = new System.Drawing.Point(82, 151);
+            this.numericUpDownPriority.Name = "numericUpDownPriority";
+            this.numericUpDownPriority.Size = new System.Drawing.Size(156, 20);
+            this.numericUpDownPriority.TabIndex = 8;
+            // 
+            // checkBoxIgnore
+            // 
+            this.checkBoxIgnore.AutoSize = true;
+            this.checkBoxIgnore.Location = new System.Drawing.Point(82, 49);
+            this.checkBoxIgnore.Name = "checkBoxIgnore";
+            this.checkBoxIgnore.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxIgnore.TabIndex = 7;
+            this.checkBoxIgnore.Text = "Ignore video";
+            this.checkBoxIgnore.UseVisualStyleBackColor = true;
             // 
             // buttonUpdate
             // 
@@ -259,6 +336,70 @@
             this.textBoxTarget.Size = new System.Drawing.Size(156, 20);
             this.textBoxTarget.TabIndex = 0;
             // 
+            // tabPageProcessedVideos
+            // 
+            this.tabPageProcessedVideos.Controls.Add(this.fastObjectListViewProcessedVideos);
+            this.tabPageProcessedVideos.Location = new System.Drawing.Point(4, 22);
+            this.tabPageProcessedVideos.Name = "tabPageProcessedVideos";
+            this.tabPageProcessedVideos.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessedVideos.Size = new System.Drawing.Size(1126, 485);
+            this.tabPageProcessedVideos.TabIndex = 1;
+            this.tabPageProcessedVideos.Text = "ProcessedVideos";
+            this.tabPageProcessedVideos.UseVisualStyleBackColor = true;
+            // 
+            // fastObjectListViewProcessedVideos
+            // 
+            this.fastObjectListViewProcessedVideos.AllColumns.Add(this.olvColumnVideoTitle);
+            this.fastObjectListViewProcessedVideos.AllColumns.Add(this.olvColumnPublishedAt);
+            this.fastObjectListViewProcessedVideos.CellEditUseWholeCell = false;
+            this.fastObjectListViewProcessedVideos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumnVideoTitle,
+            this.olvColumnPublishedAt});
+            this.fastObjectListViewProcessedVideos.ContextMenuStrip = this.contextMenuStripProcessedVideos;
+            this.fastObjectListViewProcessedVideos.Cursor = System.Windows.Forms.Cursors.Default;
+            this.fastObjectListViewProcessedVideos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastObjectListViewProcessedVideos.FullRowSelect = true;
+            this.fastObjectListViewProcessedVideos.GridLines = true;
+            this.fastObjectListViewProcessedVideos.HideSelection = false;
+            this.fastObjectListViewProcessedVideos.Location = new System.Drawing.Point(3, 3);
+            this.fastObjectListViewProcessedVideos.Name = "fastObjectListViewProcessedVideos";
+            this.fastObjectListViewProcessedVideos.RowHeight = 20;
+            this.fastObjectListViewProcessedVideos.ShowGroups = false;
+            this.fastObjectListViewProcessedVideos.Size = new System.Drawing.Size(1120, 479);
+            this.fastObjectListViewProcessedVideos.TabIndex = 1;
+            this.fastObjectListViewProcessedVideos.UseCompatibleStateImageBehavior = false;
+            this.fastObjectListViewProcessedVideos.UseFilterIndicator = true;
+            this.fastObjectListViewProcessedVideos.UseFiltering = true;
+            this.fastObjectListViewProcessedVideos.View = System.Windows.Forms.View.Details;
+            this.fastObjectListViewProcessedVideos.VirtualMode = true;
+            // 
+            // olvColumnVideoTitle
+            // 
+            this.olvColumnVideoTitle.AspectName = "Title";
+            this.olvColumnVideoTitle.FillsFreeSpace = true;
+            this.olvColumnVideoTitle.Text = "Title";
+            // 
+            // olvColumnPublishedAt
+            // 
+            this.olvColumnPublishedAt.AspectName = "PublishedAt";
+            this.olvColumnPublishedAt.AspectToStringFormat = "{0:dd.MM.yyyy HH:mm:ss}";
+            this.olvColumnPublishedAt.Text = "PublishedAt";
+            this.olvColumnPublishedAt.Width = 120;
+            // 
+            // contextMenuStripProcessedVideos
+            // 
+            this.contextMenuStripProcessedVideos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createRuleToolStripMenuItem});
+            this.contextMenuStripProcessedVideos.Name = "contextMenuStripRules";
+            this.contextMenuStripProcessedVideos.Size = new System.Drawing.Size(181, 48);
+            // 
+            // createRuleToolStripMenuItem
+            // 
+            this.createRuleToolStripMenuItem.Name = "createRuleToolStripMenuItem";
+            this.createRuleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createRuleToolStripMenuItem.Text = "Create rule...";
+            this.createRuleToolStripMenuItem.Click += new System.EventHandler(this.createRuleToolStripMenuItem_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -281,91 +422,24 @@
             // toolStripComboBoxApi
             // 
             this.toolStripComboBoxApi.Items.AddRange(new object[] {
-            "http://localhost:50002/api",
-            "http://diskstation.lampertnet:50002/api"});
+            "http://diskstation.lampertnet:50002/api",
+            "http://localhost:50002/api"});
             this.toolStripComboBoxApi.Name = "toolStripComboBoxApi";
             this.toolStripComboBoxApi.Size = new System.Drawing.Size(350, 23);
             this.toolStripComboBoxApi.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxApi_SelectedIndexChanged);
-            // 
-            // olvColumnIgnore
-            // 
-            this.olvColumnIgnore.AspectName = "IgnoreVideo";
-            this.olvColumnIgnore.CheckBoxes = true;
-            this.olvColumnIgnore.Text = "Ignore";
-            this.olvColumnIgnore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // olvColumnLastMatch
-            // 
-            this.olvColumnLastMatch.AspectName = "LastMatch";
-            this.olvColumnLastMatch.AspectToStringFormat = "{0:dd.MM.yyyy HH:mm:ss}";
-            this.olvColumnLastMatch.Text = "LastMatch";
-            this.olvColumnLastMatch.Width = 110;
-            // 
-            // olvColumnPriority
-            // 
-            this.olvColumnPriority.AspectName = "Priority";
-            this.olvColumnPriority.Text = "Priority";
-            // 
-            // checkBoxIgnore
-            // 
-            this.checkBoxIgnore.AutoSize = true;
-            this.checkBoxIgnore.Location = new System.Drawing.Point(82, 49);
-            this.checkBoxIgnore.Name = "checkBoxIgnore";
-            this.checkBoxIgnore.Size = new System.Drawing.Size(85, 17);
-            this.checkBoxIgnore.TabIndex = 7;
-            this.checkBoxIgnore.Text = "Ignore video";
-            this.checkBoxIgnore.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownPriority
-            // 
-            this.numericUpDownPriority.Location = new System.Drawing.Point(82, 151);
-            this.numericUpDownPriority.Name = "numericUpDownPriority";
-            this.numericUpDownPriority.Size = new System.Drawing.Size(156, 20);
-            this.numericUpDownPriority.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 153);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Priority:";
-            // 
-            // olvColumnSearchPos
-            // 
-            this.olvColumnSearchPos.AspectName = "SearchPosition";
-            this.olvColumnSearchPos.Text = "Search in";
-            // 
-            // comboBoxSearchPosition
-            // 
-            this.comboBoxSearchPosition.FormattingEnabled = true;
-            this.comboBoxSearchPosition.Location = new System.Drawing.Point(82, 98);
-            this.comboBoxSearchPosition.Name = "comboBoxSearchPosition";
-            this.comboBoxSearchPosition.Size = new System.Drawing.Size(156, 21);
-            this.comboBoxSearchPosition.TabIndex = 10;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 101);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Search in:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1134, 538);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tabControlMain.ResumeLayout(false);
+            this.tabPageRules.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -373,9 +447,12 @@
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fastObjectListViewRules)).EndInit();
             this.contextMenuStripRules.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPriority)).EndInit();
+            this.tabPageProcessedVideos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fastObjectListViewProcessedVideos)).EndInit();
+            this.contextMenuStripProcessedVideos.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPriority)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -383,8 +460,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl tabControlMain;
+        private System.Windows.Forms.TabPage tabPageRules;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
@@ -412,6 +489,12 @@
         private BrightIdeasSoftware.OLVColumn olvColumnSearchPos;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxSearchPosition;
+        private System.Windows.Forms.TabPage tabPageProcessedVideos;
+        private BrightIdeasSoftware.FastObjectListView fastObjectListViewProcessedVideos;
+        private BrightIdeasSoftware.OLVColumn olvColumnVideoTitle;
+        private BrightIdeasSoftware.OLVColumn olvColumnPublishedAt;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripProcessedVideos;
+        private System.Windows.Forms.ToolStripMenuItem createRuleToolStripMenuItem;
     }
 }
 

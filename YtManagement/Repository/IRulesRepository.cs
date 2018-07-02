@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using YtManagement.Model;
+using YtManagement.Common.Model;
 
 namespace YtManagement.Repository
 {
