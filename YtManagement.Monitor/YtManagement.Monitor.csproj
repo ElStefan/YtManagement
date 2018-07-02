@@ -89,8 +89,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\YtManagement.Common\YtManagement.Common.csproj">
-      <Project>{1C003DBC-EC8A-4498-9125-963B1F49DBBE}</Project>
+    <ProjectReference Include="..\YtManagement.Common\YtManagement.Common.csproj">
+      <Project>{DD2AC508-60BE-45C0-8D48-088452E50AF5}</Project>
       <Name>YtManagement.Common</Name>
     </ProjectReference>
   </ItemGroup>
