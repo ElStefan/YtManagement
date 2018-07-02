@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\YtManagement.Common\YtManagement.Common.csproj" />
     <ProjectReference Include="..\YtManagement.Common\YtManagement.Common.csproj" />
   </ItemGroup>
 
