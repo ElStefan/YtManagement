@@ -16,6 +16,9 @@ using YtManagement.Storage;
 
 namespace YtManagement.Service
 {
+    /// <summary>
+    /// Handles youtube requests
+    /// </summary>
     public class YoutubeService : IYoutubeService
     {
         private readonly GoogleAuthorizationCodeFlow _flow;
@@ -28,7 +31,10 @@ namespace YtManagement.Service
         private ConcurrentDictionary<string, Subscription> _subscriptions = new ConcurrentDictionary<string, Subscription>();
         private ConcurrentDictionary<string, DateTime> _lastRequestDates = new ConcurrentDictionary<string, DateTime>();
 
-
+        /// <summary>
+        /// Create a new youtube service with the given storage to save work
+        /// </summary>
+        /// <param name="storage">storage where data will be saved</param>
         public YoutubeService(IStorage storage)
         {
             var flowInit = new GoogleAuthorizationCodeFlow.Initializer();
@@ -58,6 +64,9 @@ namespace YtManagement.Service
             }
         }
 
+        /// <summary>
+        /// Load all playlists from the logged in user
+        /// </summary>
         public ActionResult<List<YtPlaylist>> LoadPlaylists()
         {
             if (_lastRequestDates.TryGetValue(nameof(LoadPlaylists), out var requestTime))
@@ -82,16 +91,17 @@ namespace YtManagement.Service
             var playlistResponse = playlistRequest.Execute();
             var list = playlistResponse.Items.Select(o => new YtPlaylist { Id = o.Id, Title = o.Snippet.Title }).ToList();
 
-            foreach (var item in playlistResponse.Items)
-            {
-                _playlists.AddOrUpdate(item.Id, item, (key, oldValue) => item);
-            }
+            _playlists.AddUpdateOrRemove(playlistResponse.Items, o => o.Id);
 
             _lastRequestDates.AddOrUpdate(nameof(LoadPlaylists), DateTime.Now, (key, oldValue) => DateTime.Now);
             return new ActionResult<List<YtPlaylist>>(ActionStatus.Success, list);
 
         }
 
+        
+        /// <summary>
+        /// Create a new youtube service for requests
+        /// </summary>
         private YouTubeService CreateService()
         {
             return new YouTubeService(new BaseClientService.Initializer
@@ -101,17 +111,27 @@ namespace YtManagement.Service
             });
         }
 
+        /// <summary>
+        /// Create the uri where the user should be redirected to
+        /// </summary>
         public Uri CreateAuthUri()
         {
             return this._flow.CreateAuthorizationCodeRequest("http://localhost:50002/api/auth/Exchange").Build();
         }
 
+        /// <summary>
+        /// Create credentials with code from youtube
+        /// </summary>
+        /// <param name="code"></param>
         public void ExchangeCode(string code)
         {
             var result = this._flow.ExchangeCodeForTokenAsync("YtManagement", code, "http://localhost:50002/api/auth/Exchange", CancellationToken.None).Result;
             _credential = new UserCredential(this._flow, "YtManagement", result);
         }
 
+        /// <summary>
+        /// Get all subscriptions from the logged in user
+        /// </summary>
         public ActionResult<List<YtChannel>> GetSubscriptions()
         {
             if (_lastRequestDates.TryGetValue(nameof(GetSubscriptions), out var requestTime))
@@ -149,15 +169,16 @@ namespace YtManagement.Service
             while (subscriptionListResponse.Items.Count > 0 && pageToken != null);
             var list = subscriptions.Select(o => new YtChannel { Id = o.Snippet.ResourceId.ChannelId, Title = o.Snippet.Title }).ToList();
 
-            foreach (var item in subscriptionListResponse.Items)
-            {
-                _subscriptions.AddOrUpdate(item.Id, item, (key, oldValue) => item);
-            }
+            _subscriptions.AddUpdateOrRemove(subscriptionListResponse.Items, o => o.Id);
             _lastRequestDates.AddOrUpdate(nameof(GetSubscriptions), DateTime.Now, (key, oldValue) => DateTime.Now);
 
             return new ActionResult<List<YtChannel>>(ActionStatus.Success, list);
         }
 
+        /// <summary>
+        /// Get all uploads from a specific channel
+        /// </summary>
+        /// <param name="channelId"></param>
         public ActionResult<List<YtVideo>> GetUploads(string channelId)
         {
             if (_credential == null)
@@ -185,6 +206,11 @@ namespace YtManagement.Service
             return new ActionResult<List<YtVideo>>(ActionStatus.Success, list);
         }
 
+        /// <summary>
+        /// Add video to playlist
+        /// </summary>
+        /// <param name="playlistItemId"></param>
+        /// <param name="targetPlaylistTitle"></param>
         public ActionResult AddToPlaylist(string playlistItemId, string targetPlaylistTitle)
         {
             if (_credential == null)
@@ -221,6 +247,10 @@ namespace YtManagement.Service
 
         }
 
+        /// <summary>
+        /// Get playlist item from local cache, so we don't need to ask youtube again
+        /// </summary>
+        /// <param name="playlistItemId"></param>
         private ActionResult<PlaylistItem> GetPlaylistItemFromCache(string playlistItemId)
         {
             if (!_playlistItems.TryGetValue(playlistItemId, out var value))
@@ -230,6 +260,10 @@ namespace YtManagement.Service
             return new ActionResult<PlaylistItem>(ActionStatus.Success, value);
         }
 
+        /// <summary>
+        /// Get playlist from local cache, so we don't need to ask youtube again
+        /// </summary>
+        /// <param name="targetPlaylistTitle"></param>
         private ActionResult<Playlist> GetPlaylistFromCache(string targetPlaylistTitle)
         {
             LoadPlaylists();
@@ -242,6 +276,10 @@ namespace YtManagement.Service
             return new ActionResult<Playlist>(ActionStatus.Success, playlist);
         }
 
+        /// <summary>
+        /// Marks the video id as processed
+        /// </summary>
+        /// <param name="videoId"></param>
         public void SetProcessed(string videoId)
         {
             var playlistItemResult = GetPlaylistItemFromCache(videoId);
@@ -252,22 +290,29 @@ namespace YtManagement.Service
             this._processedPlaylistItems.GetOrAdd(videoId, new ProcessedPlaylistItem { Key = videoId, PlaylistItem = playlistItemResult.Data });
 
             var removeKeys = this._processedPlaylistItems
-                .Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-7))
+                .Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-14))
                 .Select(o => o.Key)
                 .ToList();
 
             foreach (var item in removeKeys)
             {
-                this._processedPlaylistItems.TryRemove(item, out var trash);
+                this._processedPlaylistItems.TryRemove(item, out _);
             }
             this._storage.Save(_processedPlaylistItems);
         }
 
+        /// <summary>
+        /// Tells if a video has already been processed
+        /// </summary>
+        /// <param name="videoId"></param>
         public bool IsProcessed(string videoId)
         {
             return this._processedPlaylistItems.ContainsKey(videoId);
         }
 
+        /// <summary>
+        /// Returns all processed videos
+        /// </summary>
         public ActionResult<List<YtVideo>> GetProcessed()
         {
             var data = this._processedPlaylistItems.Values.Select(o => o.PlaylistItem.AsYtVideo()).ToList();
