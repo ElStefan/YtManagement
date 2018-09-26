@@ -3,7 +3,7 @@ Goes through all your youtube subscriptions and moves videos to playlists accord
 Features:
 - ASP.NET MVC Service
 - Using .NET Core 2.0 for linux compatibility
-- Available as docker container on elstefan/ytmanagement
+- Available as docker container on elstefan/ytmanagement: `docker pull elstefan/ytmanagement:latest`
 
 Requirements:
 - Requires a Google Developer Account and access to Youtube Data API v3 (50. Mio requests/day for free)
