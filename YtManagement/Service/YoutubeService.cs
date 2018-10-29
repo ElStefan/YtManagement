@@ -194,6 +194,7 @@ namespace YtManagement.Service
             var playlistItemsResponse = playlistItemsListRequest.Execute();
             var list = playlistItemsResponse.Items
                 .Where(o => o.Snippet.PublishedAt > DateTime.Now.AddDays(-7))
+                .Where(o => !o.Snippet.Title.Equals("Private video"))
                 .OrderBy(o => o.Snippet.PublishedAt)
                 .Select(o => o.AsYtVideo())
                 .ToList();
