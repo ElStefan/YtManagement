@@ -16,10 +16,10 @@ namespace YtManagement.Common.Model
 
         }
 
-        public string Id { get; private set; }
-        public string Title { get; private set; }
-        public DateTime? PublishedAt { get; private set; }
-        public int MatchRuleId { get; private set; }
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public DateTime? PublishedAt { get; set; }
+        public int MatchRuleId { get; set; }
 
         public YtVideo SetMatchRuleId(int matchRuleId)
         {

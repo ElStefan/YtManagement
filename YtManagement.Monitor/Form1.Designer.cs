@@ -54,17 +54,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxRule = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxTarget = new System.Windows.Forms.TextBox();
             this.tabPageProcessedVideos = new System.Windows.Forms.TabPage();
             this.fastObjectListViewProcessedVideos = new BrightIdeasSoftware.FastObjectListView();
             this.olvColumnVideoTitle = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnMatchRuleId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnPublishedAt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.contextMenuStripProcessedVideos = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBoxApi = new System.Windows.Forms.ToolStripComboBox();
-            this.olvColumnMatchRuleId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.comboBoxTarget = new System.Windows.Forms.ComboBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageRules.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -115,6 +115,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.comboBoxTarget);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.comboBoxSearchPosition);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -126,7 +127,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.textBoxRule);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Panel2.Controls.Add(this.textBoxTarget);
             this.splitContainer1.Size = new System.Drawing.Size(1120, 479);
             this.splitContainer1.SplitterDistance = 835;
             this.splitContainer1.TabIndex = 2;
@@ -330,13 +330,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Target:";
             // 
-            // textBoxTarget
-            // 
-            this.textBoxTarget.Location = new System.Drawing.Point(82, 125);
-            this.textBoxTarget.Name = "textBoxTarget";
-            this.textBoxTarget.Size = new System.Drawing.Size(156, 20);
-            this.textBoxTarget.TabIndex = 0;
-            // 
             // tabPageProcessedVideos
             // 
             this.tabPageProcessedVideos.Controls.Add(this.fastObjectListViewProcessedVideos);
@@ -381,6 +374,12 @@
             this.olvColumnVideoTitle.AspectName = "Title";
             this.olvColumnVideoTitle.FillsFreeSpace = true;
             this.olvColumnVideoTitle.Text = "Title";
+            // 
+            // olvColumnMatchRuleId
+            // 
+            this.olvColumnMatchRuleId.AspectName = "MatchRuleId";
+            this.olvColumnMatchRuleId.Text = "MatchRuleId";
+            this.olvColumnMatchRuleId.Width = 90;
             // 
             // olvColumnPublishedAt
             // 
@@ -431,11 +430,13 @@
             this.toolStripComboBoxApi.Size = new System.Drawing.Size(350, 23);
             this.toolStripComboBoxApi.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxApi_SelectedIndexChanged);
             // 
-            // olvColumnMatchRuleId
+            // comboBoxTarget
             // 
-            this.olvColumnMatchRuleId.AspectName = "MatchRuleId";
-            this.olvColumnMatchRuleId.Text = "MatchRuleId";
-            this.olvColumnMatchRuleId.Width = 90;
+            this.comboBoxTarget.FormattingEnabled = true;
+            this.comboBoxTarget.Location = new System.Drawing.Point(82, 125);
+            this.comboBoxTarget.Name = "comboBoxTarget";
+            this.comboBoxTarget.Size = new System.Drawing.Size(156, 21);
+            this.comboBoxTarget.TabIndex = 12;
             // 
             // Form1
             // 
@@ -482,7 +483,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxRule;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxTarget;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxApi;
         private BrightIdeasSoftware.FastObjectListView fastObjectListViewRules;
         private BrightIdeasSoftware.OLVColumn olvColumnId;
@@ -505,6 +505,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripProcessedVideos;
         private System.Windows.Forms.ToolStripMenuItem createRuleToolStripMenuItem;
         private BrightIdeasSoftware.OLVColumn olvColumnMatchRuleId;
+        private System.Windows.Forms.ComboBox comboBoxTarget;
     }
 }
 

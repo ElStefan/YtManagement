@@ -4,16 +4,16 @@ using YtManagement.Common.Model;
 
 namespace YtManagement.Extension
 {
-    public static class PlaylistItemExtensions
+    public static class PlaylistExtensions
     {
-        public static YtVideo AsYtVideo(this PlaylistItem item)
+        public static YtPlaylist AsYtPlaylist(this Playlist item)
         {
             if(item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            return new YtVideo(item.Id, item.Snippet.Title, item.Snippet.PublishedAt);
+            return new YtPlaylist(item.Id, item.Snippet.Title);
         }
     }
 }

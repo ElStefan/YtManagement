@@ -6,16 +6,16 @@ using YtManagement.Service;
 namespace YtManagement.Controllers
 {
     [Route("api/[controller]")]
-    public class VideosController : Controller
+    public class PlaylistsController : Controller
     {
         private IYoutubeService _youtubeService;
 
-        public VideosController(IYoutubeService youtubeService)
+        public PlaylistsController(IYoutubeService youtubeService)
         {
             this._youtubeService = youtubeService;
         }
 
         [HttpGet]
-        public ActionResult<List<YtVideo>> Get() => _youtubeService.GetProcessed();
+        public ActionResult<List<YtPlaylist>> Get() => _youtubeService.GetPlaylists();
     }
 }

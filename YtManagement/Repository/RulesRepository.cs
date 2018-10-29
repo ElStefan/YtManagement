@@ -44,6 +44,10 @@ namespace YtManagement.Repository
             {
                 return new ActionResult<int>(ActionStatus.Error, "Id already exists, try again");
             }
+            if (item.IgnoreVideo)
+            {
+                item.Target = null;
+            }
             var saveResult = this._storage.Save(this._cache);
             if(saveResult.Status != ActionStatus.Success)
             {
@@ -87,7 +91,7 @@ namespace YtManagement.Repository
             var oldRule = cacheItemResult.Data;
             oldRule.Regex = item.Regex;
             oldRule.RuleString = item.RuleString;
-            oldRule.Target = item.Target;
+            oldRule.Target = item.IgnoreVideo ? null : item.Target;
             oldRule.IgnoreVideo = item.IgnoreVideo;
             oldRule.Priority = item.Priority;
             oldRule.SearchPosition = item.SearchPosition;

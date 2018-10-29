@@ -73,7 +73,7 @@ namespace YtManagement.Service
             {
                 if (requestTime > DateTime.Now.AddHours(-1))
                 {
-                    var data = _playlists.Values.Select(o => new YtPlaylist { Id = o.Id, Title = o.Snippet.Title }).ToList();
+                    var data = _playlists.Values.Select(o => new YtPlaylist(o.Id, o.Snippet.Title)).ToList();
                     return new ActionResult<List<YtPlaylist>>(ActionStatus.Success, data);
                 }
             }
@@ -89,7 +89,7 @@ namespace YtManagement.Service
             playlistRequest.Mine = true;
             playlistRequest.MaxResults = 50;
             var playlistResponse = playlistRequest.Execute();
-            var list = playlistResponse.Items.Select(o => new YtPlaylist { Id = o.Id, Title = o.Snippet.Title }).ToList();
+            var list = playlistResponse.Items.Select(o => new YtPlaylist(o.Id, o.Snippet.Title)).ToList();
 
             _playlists.AddUpdateOrRemove(playlistResponse.Items, o => o.Id);
 
@@ -318,6 +318,14 @@ namespace YtManagement.Service
         {
             var data = this._processedPlaylistItems.Values.Select(o => o.PlaylistItem.AsYtVideo().SetMatchRuleId(o.MatchRuleId)).ToList();
             return new ActionResult<List<YtVideo>>(ActionStatus.Success, data);
+        }
+
+        /// <summary>
+        /// Returns all playlists
+        /// </summary>
+        public ActionResult<List<YtPlaylist>> GetPlaylists()
+        {
+            return LoadPlaylists();
         }
     }
 }

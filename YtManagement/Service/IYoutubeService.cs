@@ -11,6 +11,7 @@ namespace YtManagement.Service
         ActionResult<List<YtChannel>> GetSubscriptions();
         ActionResult<List<YtVideo>> GetUploads(string channelId);
         ActionResult<List<YtVideo>> GetProcessed();
+        ActionResult<List<YtPlaylist>> GetPlaylists();
 
         ActionResult AddToPlaylist(string videoId, string targetPlaylist);
         void SetProcessed(string videoId, int matchRuleId);

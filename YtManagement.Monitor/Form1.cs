@@ -20,6 +20,9 @@ namespace YtManagement.Monitor
             this.comboBoxSearchPosition.DataSource = Enum.GetValues(typeof(SearchPosition)).Cast<SearchPosition>().Select(o => new { Name = o.ToString(), Value = (int)o }).ToList();
             this.comboBoxSearchPosition.DisplayMember = "Name";
             this.comboBoxSearchPosition.ValueMember = "Value";
+
+            this.comboBoxTarget.DisplayMember = "Name";
+            this.comboBoxTarget.ValueMember = "Value";
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
@@ -32,13 +35,25 @@ namespace YtManagement.Monitor
             switch (this.tabControlMain.SelectedTab.Name)
             {
                 case nameof(this.tabPageRules):
-
+                    ReloadPlaylists();
                     ReloadRules();
                     break;
                 case nameof(this.tabPageProcessedVideos):
                     ReloadProcessedVideos();
                     break;
             }
+        }
+
+        private void ReloadPlaylists()
+        {
+            var result = YtManagementClient.GetPlaylists();
+            if (result.Status != ActionStatus.Success)
+            {
+                this.ShowTooltip(result.Message, ToolTipIcon.Error);
+                return;
+            }
+
+            this.comboBoxTarget.DataSource = result.Data.Select(o => new { Name = o.Title, Value = o.Title }).ToList();
         }
 
         private void ReloadRules()
@@ -57,7 +72,7 @@ namespace YtManagement.Monitor
             {
                 Regex = this.checkBoxRegex.Checked,
                 RuleString = this.textBoxRule.Text,
-                Target = this.textBoxTarget.Text,
+                Target = this.comboBoxTarget.SelectedValue as string ?? this.comboBoxTarget.Text,
                 IgnoreVideo = this.checkBoxIgnore.Checked,
                 Priority = (int)this.numericUpDownPriority.Value,
                 SearchPosition = (SearchPosition)this.comboBoxSearchPosition.SelectedValue
@@ -81,8 +96,8 @@ namespace YtManagement.Monitor
 
         private void fastObjectListViewRules_SelectionChanged(object sender, EventArgs e)
         {
-            this.textBoxTarget.Clear();
             this.textBoxRule.Clear();
+            this.comboBoxTarget.SelectedValue = "Unknown";
             this.checkBoxRegex.Checked = false;
             this.checkBoxIgnore.Checked = false;
             this.numericUpDownPriority.Value = 0;
@@ -92,7 +107,7 @@ namespace YtManagement.Monitor
                 return;
             }
             this.textBoxRule.Text = item.RuleString;
-            this.textBoxTarget.Text = item.Target;
+            this.comboBoxTarget.SelectedValue = item.Target;
             this.checkBoxRegex.Checked = item.Regex;
             this.checkBoxIgnore.Checked = item.IgnoreVideo;
             this.numericUpDownPriority.Value = item.Priority;
@@ -106,7 +121,7 @@ namespace YtManagement.Monitor
                 return;
             }
             item.RuleString =  this.textBoxRule.Text;
-            item.Target = this.textBoxTarget.Text;
+            item.Target = this.comboBoxTarget.SelectedValue as string ?? this.comboBoxTarget.Text;
             item.Regex = this.checkBoxRegex.Checked;
             item.IgnoreVideo = this.checkBoxIgnore.Checked;
             item.Priority = (int)this.numericUpDownPriority.Value;
@@ -146,7 +161,7 @@ namespace YtManagement.Monitor
             this.tabControlMain.SelectedTab = this.tabPageRules;
 
             this.textBoxRule.Text = item.Title;
-            this.textBoxTarget.Text = "unknown";
+            this.comboBoxTarget.SelectedValue = "Unknown";
             this.checkBoxRegex.Checked = false;
             this.checkBoxIgnore.Checked = false;
             this.numericUpDownPriority.Value = 4;

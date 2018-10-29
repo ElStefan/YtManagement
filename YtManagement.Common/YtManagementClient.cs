@@ -35,6 +35,10 @@ namespace YtManagement.Common
         {
             return Get<ActionResult<IEnumerable<YtVideo>>>("videos");
         }
+        public static ActionResult<IEnumerable<YtPlaylist>> GetPlaylists()
+        {
+            return Get<ActionResult<IEnumerable<YtPlaylist>>>("playlists");
+        }
 
         private static T Get<T>(string path)
         {
