@@ -64,6 +64,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBoxApi = new System.Windows.Forms.ToolStripComboBox();
+            this.olvColumnMatchRuleId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tabControlMain.SuspendLayout();
             this.tabPageRules.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -350,10 +351,12 @@
             // fastObjectListViewProcessedVideos
             // 
             this.fastObjectListViewProcessedVideos.AllColumns.Add(this.olvColumnVideoTitle);
+            this.fastObjectListViewProcessedVideos.AllColumns.Add(this.olvColumnMatchRuleId);
             this.fastObjectListViewProcessedVideos.AllColumns.Add(this.olvColumnPublishedAt);
             this.fastObjectListViewProcessedVideos.CellEditUseWholeCell = false;
             this.fastObjectListViewProcessedVideos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnVideoTitle,
+            this.olvColumnMatchRuleId,
             this.olvColumnPublishedAt});
             this.fastObjectListViewProcessedVideos.ContextMenuStrip = this.contextMenuStripProcessedVideos;
             this.fastObjectListViewProcessedVideos.Cursor = System.Windows.Forms.Cursors.Default;
@@ -391,12 +394,12 @@
             this.contextMenuStripProcessedVideos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createRuleToolStripMenuItem});
             this.contextMenuStripProcessedVideos.Name = "contextMenuStripRules";
-            this.contextMenuStripProcessedVideos.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStripProcessedVideos.Size = new System.Drawing.Size(141, 26);
             // 
             // createRuleToolStripMenuItem
             // 
             this.createRuleToolStripMenuItem.Name = "createRuleToolStripMenuItem";
-            this.createRuleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createRuleToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.createRuleToolStripMenuItem.Text = "Create rule...";
             this.createRuleToolStripMenuItem.Click += new System.EventHandler(this.createRuleToolStripMenuItem_Click);
             // 
@@ -427,6 +430,12 @@
             this.toolStripComboBoxApi.Name = "toolStripComboBoxApi";
             this.toolStripComboBoxApi.Size = new System.Drawing.Size(350, 23);
             this.toolStripComboBoxApi.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxApi_SelectedIndexChanged);
+            // 
+            // olvColumnMatchRuleId
+            // 
+            this.olvColumnMatchRuleId.AspectName = "MatchRuleId";
+            this.olvColumnMatchRuleId.Text = "MatchRuleId";
+            this.olvColumnMatchRuleId.Width = 90;
             // 
             // Form1
             // 
@@ -495,6 +504,7 @@
         private BrightIdeasSoftware.OLVColumn olvColumnPublishedAt;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripProcessedVideos;
         private System.Windows.Forms.ToolStripMenuItem createRuleToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn olvColumnMatchRuleId;
     }
 }
 

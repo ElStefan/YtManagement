@@ -6,5 +6,6 @@ namespace YtManagement.Model
     {
         public string Key { get; set; }
         public PlaylistItem PlaylistItem { get; set; }
+        public int MatchRuleId { get; set; }
     }
 }

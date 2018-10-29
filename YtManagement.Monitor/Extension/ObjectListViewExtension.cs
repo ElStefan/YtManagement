@@ -24,6 +24,11 @@ namespace YtManagement.Monitor.Extension
 
         public static void LoadFrom<T>(this ObjectListView olv, Func<ActionResult<IEnumerable<T>>> dataReceiver)
         {
+            LoadFrom(olv, dataReceiver, null);
+        }
+
+        public static void LoadFrom<T>(this ObjectListView olv, Func<ActionResult<IEnumerable<T>>> dataReceiver, Func<IEnumerable<T>, IEnumerable<T>> manipulateFunc)
+        {
             olv.OverlayText = LoadingOverlay;
             olv.EmptyListMsg = null;
             olv.ClearObjects();
@@ -36,7 +41,12 @@ namespace YtManagement.Monitor.Extension
             }
             olv.EmptyListMsg = "List is empty";
             olv.OverlayText = null;
-            olv.SetObjects(result.Data);
+            var data = result.Data;
+            if (manipulateFunc != null)
+            {
+                data = manipulateFunc(data);
+            }
+            olv.SetObjects(data);
         }
     }
 }

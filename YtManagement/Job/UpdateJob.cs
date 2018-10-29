@@ -100,7 +100,7 @@ namespace YtManagement.Job
                             continue;
                         }
                     }
-                    ytService.SetProcessed(video.Id);
+                    ytService.SetProcessed(video.Id, matchedRule.Id);
 
                 }
             }

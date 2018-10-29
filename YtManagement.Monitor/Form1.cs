@@ -48,7 +48,7 @@ namespace YtManagement.Monitor
 
         private void ReloadProcessedVideos()
         {
-            this.fastObjectListViewProcessedVideos.LoadFrom(YtManagementClient.GetProcessedVideos);
+            this.fastObjectListViewProcessedVideos.LoadFrom(YtManagementClient.GetProcessedVideos, o => o.OrderByDescending(p => p.PublishedAt));
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)

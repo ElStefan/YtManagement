@@ -10,12 +10,20 @@ namespace YtManagement.Common.Model
             this.Title = title;
             this.PublishedAt = publishedAt;
         }
+
         protected YtVideo()
         {
 
         }
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public DateTime? PublishedAt { get; set; }
+
+        public string Id { get; private set; }
+        public string Title { get; private set; }
+        public DateTime? PublishedAt { get; private set; }
+        public int MatchRuleId { get; private set; }
+
+        public YtVideo SetMatchRuleId(int matchRuleId)
+        {
+            return new YtVideo(Id, Title, PublishedAt) { MatchRuleId = matchRuleId };
+        }
     }
 }

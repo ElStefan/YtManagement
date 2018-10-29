@@ -281,14 +281,14 @@ namespace YtManagement.Service
         /// Marks the video id as processed
         /// </summary>
         /// <param name="videoId"></param>
-        public void SetProcessed(string videoId)
+        public void SetProcessed(string videoId, int matchRuleId)
         {
             var playlistItemResult = GetPlaylistItemFromCache(videoId);
             if (playlistItemResult.Status != ActionStatus.Success)
             {
                 return;
             }
-            this._processedPlaylistItems.GetOrAdd(videoId, new ProcessedPlaylistItem { Key = videoId, PlaylistItem = playlistItemResult.Data });
+            this._processedPlaylistItems.GetOrAdd(videoId, new ProcessedPlaylistItem { Key = videoId, PlaylistItem = playlistItemResult.Data, MatchRuleId = matchRuleId });
 
             var removeKeys = this._processedPlaylistItems
                 .Where(o => o.Value.PlaylistItem.Snippet.PublishedAt <= DateTime.Now.AddDays(-14))
@@ -316,7 +316,7 @@ namespace YtManagement.Service
         /// </summary>
         public ActionResult<List<YtVideo>> GetProcessed()
         {
-            var data = this._processedPlaylistItems.Values.Select(o => o.PlaylistItem.AsYtVideo()).ToList();
+            var data = this._processedPlaylistItems.Values.Select(o => o.PlaylistItem.AsYtVideo().SetMatchRuleId(o.MatchRuleId)).ToList();
             return new ActionResult<List<YtVideo>>(ActionStatus.Success, data);
         }
     }

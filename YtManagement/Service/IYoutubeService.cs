@@ -13,7 +13,7 @@ namespace YtManagement.Service
         ActionResult<List<YtVideo>> GetProcessed();
 
         ActionResult AddToPlaylist(string videoId, string targetPlaylist);
-        void SetProcessed(string videoId);
+        void SetProcessed(string videoId, int matchRuleId);
         bool IsProcessed(string videoId);
 
         Uri CreateAuthUri();
